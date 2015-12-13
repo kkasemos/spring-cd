@@ -1,0 +1,64 @@
+swagger: '2.0'
+info:
+  title: FX Rates API
+  description: Fetch FX rates of a particular currency
+  version: "1.0.0"
+host: api.logindy.com
+schemes:
+  - http
+basePath: /v1/fx
+produces:
+  - application/json
+paths:
+  /rates:
+    get:
+      summary: FX Rates
+      description: The FX rates endpoint returns buy and sell rates of a particular currency.
+      parameters:
+        - name: currency_pair
+          in: query
+          description: Currency pair to fetch its rates.
+          required: true
+          type: string
+        - name: rate_type
+          in: query
+          description: Types of rates; snapshot or realtime.
+          required: true
+          type: string
+      tags:
+        - Rates
+      responses:
+        200:
+          description: FX rates.
+          schema:
+            $ref: '#/definitions/FXRate'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  FXRate:
+    properties:
+      id:
+        type: string
+        description: Unique identifier representing specific rates for a given currency pair.
+      currency_pair:
+        type: string
+        description: Currency pair. For example, USD/JPY.
+      buy:
+        type: number
+        format: double
+        description: Buy rate.
+      sell:
+        type: number
+        format: double
+        description: Sell rate.
+  Error:
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
