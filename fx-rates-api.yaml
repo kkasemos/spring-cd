@@ -20,11 +20,6 @@ paths:
           description: Currency pair to fetch its rates.
           required: true
           type: string
-        - name: rate_type
-          in: query
-          description: Types of rates; snapshot or realtime.
-          required: true
-          type: string
       tags:
         - Rates
       responses:
